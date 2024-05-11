@@ -14,6 +14,7 @@ target/
 .sts4-cache
 
 .env
+database.env
 
 ### IntelliJ IDEA ###
 .idea

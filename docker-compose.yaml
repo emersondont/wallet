@@ -1,0 +1,45 @@
+services:
+  postgres:
+    image: postgres
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres-volume:/var/lib/postgresql/data
+    env_file:
+      - ./wallet-api/database.env
+    
+  api:
+    container_name: wallet-api
+    build: ./wallet-api
+    ports:
+      - "8080:8080"
+    depends_on:
+      - postgres
+    env_file:
+      - ./wallet-api/.env
+
+  spa:
+    container_name: wallet-spa
+    build: ./wallet-spa
+    depends_on:
+      - api
+    env_file:
+      - ./wallet-spa/.env.local
+    volumes:
+      - spa-volume:/var/www/html
+  
+  nginx:
+    container_name: wallet-nginx
+    build: ./nginx
+    ports:
+      - 81:81
+    volumes:
+      - spa-volume:/var/www/html
+    depends_on:
+      - postgres
+      - api
+      - spa
+  
+volumes:
+  postgres-volume:
+  spa-volume:

@@ -1,4 +1,3 @@
-const { text } = require('stream/consumers');
 
 /** @type {import('tailwindcss').Config} */
 module.exports = {
