@@ -23,7 +23,10 @@ type TransactionSchema = z.infer<typeof transactionSchema>
 export default function NewTransaction(props: Props) {
   const navigate = useNavigate();
   const { register, handleSubmit, setError, formState: { errors } } = useForm<TransactionSchema>({
-    resolver: zodResolver(transactionSchema)
+    resolver: zodResolver(transactionSchema),
+    defaultValues: {
+      date: new Date().toISOString().split('T')[0] as unknown as Date
+    }
   })
 
   const handleNewTransaction: SubmitHandler<TransactionSchema> = async (data) => {
