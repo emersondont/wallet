@@ -1,9 +1,11 @@
+import { UseFormRegisterReturn } from "react-hook-form";
 
 interface Props {
-  type: "text" | "number" | "password" | "date" | "email";
+  type?: "text" | "number" | "password" | "date" | "email";
   placeholder: string;
-  value: string | number;
-  setValue: ((value: string) => void) | ((value: number) => void);
+  register?: UseFormRegisterReturn;
+  value?: string | number;
+  setValue?: ((value: string) => void) | ((value: number) => void);
   list?: string;
   listArray?: string[]
 }
@@ -26,6 +28,7 @@ export default function Input(props: Props) {
             (props.setValue as (value: string) => void)(e.target.value);
           }
         }}
+        {...props.register}
       />
       {props.list &&
         <datalist id={props.list} >
