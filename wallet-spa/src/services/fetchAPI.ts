@@ -3,8 +3,9 @@ export const fetchAPI = async (url: string, options?: RequestInit) => {
 		localStorage.removeItem('accessToken');
 	})
 		
-	if(response?.status === 401) {
+	if(response?.status === 401 && localStorage.getItem('accessToken')) {
 		localStorage.removeItem('accessToken');
+		window.location.href = '/login';
 	}
 	
 	if (!response?.ok) {
