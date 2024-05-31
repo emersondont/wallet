@@ -1,51 +1,58 @@
-import { FormEvent, useEffect, useState } from "react";
 import Button from "../components/button";
 import Input from "../components/input";
 import { login } from "../services/authentication";
 import { useNavigate, Link } from "react-router-dom";
 import ErrorMessage from "../components/errorMessage";
+import { useForm, SubmitHandler } from "react-hook-form";
+import { z } from "zod";
+import { zodResolver } from '@hookform/resolvers/zod'
 
+const loginSchema = z.object({
+  email: z.string().email().min(1),
+  password: z.string().min(1)
+})
+type LoginSchema = z.infer<typeof loginSchema>
 
 export default function Login() {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [error, setError] = useState<any>(null)
   const navigate = useNavigate();
+  const { register, handleSubmit, setError, formState: { errors } } = useForm<LoginSchema>({
+    resolver: zodResolver(loginSchema)
+  })
 
-  const handleLogin = async (event: FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
+  const handleLogin: SubmitHandler<LoginSchema> = async (data) => {
+    const { email, password } = data;
 
-    if(!email || !password) return setError({message: 'Preencha todos os campos.'});
-    
     try {
       const { token } = await login(email, password);
       localStorage.setItem('accessToken', token);
       navigate('/');
     } catch (error) {
-      setError(error)
+      setError("root", { message: String(error) })
     }
   };
 
-  useEffect(() => {
-    setError(null);
-  }, [email, password])
+  const onError = () => {
+    if (errors.email?.type == "invalid_string") {
+      setError("root", { message: "Preencha todos os campos corretamente." })
+    }
+    else {
+      setError("root", { message: "Preencha todos os campos." })
+    }
+  }
 
   return (
     <div className="flex flex-col gap-6 items-center w-64">
       <h1 className="text-2xl font-bold">Bem Vindo!</h1>
-      <ErrorMessage error={error}/>
-      <form onSubmit={(e) => handleLogin(e)} className="flex flex-col gap-3 w-full">
+      <ErrorMessage error={errors.root} />
+      <form onSubmit={handleSubmit(handleLogin, onError)} className="flex flex-col gap-3 w-full">
         <Input
-          type="email"
           placeholder="Email"
-          value={email}
-          setValue={setEmail}
+          register={register('email')}
         />
         <Input
-          type="password"
           placeholder="Senha"
-          value={password}
-          setValue={setPassword}
+          type="password"
+          register={register('password')}
         />
         <Button
           type="submit"

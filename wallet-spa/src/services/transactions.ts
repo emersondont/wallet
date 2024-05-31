@@ -17,6 +17,7 @@ export const getTransactionsByMonth = async (year: string, month: string) => {
 
 export const createTransaction = async (transaction: TransactionType) => {
   const token = localStorage.getItem('accessToken');
+  console.log(transaction)
   const data = await fetchAPI('transaction', {
     method: 'POST',
     headers: {
