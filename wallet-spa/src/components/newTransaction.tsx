@@ -25,7 +25,7 @@ export default function NewTransaction(props: Props) {
   const { register, handleSubmit, setError, formState: { errors } } = useForm<TransactionSchema>({
     resolver: zodResolver(transactionSchema),
     defaultValues: {
-      date: new Date().toISOString().split('T')[0] as unknown as Date
+      date: new Date().toLocaleDateString('sv-SE') as unknown as Date
     }
   })
 
@@ -65,6 +65,7 @@ export default function NewTransaction(props: Props) {
       <form onSubmit={handleSubmit(handleNewTransaction, onError)} className="flex flex-col gap-3 w-full">
         <Input
           type="number"
+          step={0.01}
           placeholder="Valor"
           register={register('value')}
         />
@@ -72,7 +73,7 @@ export default function NewTransaction(props: Props) {
           placeholder="Descrição"
           register={register('description')}
           list='options'
-          listArray={props.listArray}
+          listarray={props.listArray}
         />
         <Input
           type="date"

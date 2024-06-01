@@ -3,7 +3,7 @@ import { UseFormRegisterReturn } from "react-hook-form";
 interface Props extends React.InputHTMLAttributes<HTMLInputElement> {
   register: UseFormRegisterReturn;
   list?: string;
-  listArray?: string[]
+  listarray?: string[]
 }
 
 export default function Input(props: Props) {
@@ -17,7 +17,7 @@ export default function Input(props: Props) {
       />
       {props.list &&
         <datalist id={props.list} >
-          {props.listArray?.map((item, index) => (
+          {props.listarray?.map((item, index) => (
             <option key={index} value={item} />
           ))}
         </datalist>
