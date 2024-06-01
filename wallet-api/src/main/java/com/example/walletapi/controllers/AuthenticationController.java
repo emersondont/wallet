@@ -40,7 +40,7 @@ public class AuthenticationController {
 
             return ResponseEntity.ok(new LoginResponseRecordDto(token));
         } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("{\"error\": \"Usuário não encontrado ou senha incorreta.\"}");
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Usuário não encontrado ou senha incorreta.");
         }
     }
 
@@ -48,7 +48,7 @@ public class AuthenticationController {
     public ResponseEntity register(@RequestBody @Valid RegisterRecordDto data) {
         try {
             if (this.userRepository.findByEmail(data.email()) != null)
-                return ResponseEntity.badRequest().body("{\"error\": \"Já existe uma conta associada a este email.\"}");
+                return ResponseEntity.badRequest().body("Já existe uma conta associada a este email.");
 
             String encryptedPassword = new BCryptPasswordEncoder().encode(data.password());
 
@@ -58,7 +58,7 @@ public class AuthenticationController {
 
             return ResponseEntity.ok().build();
         } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("{\"error\": \"Erro ao cadastrar usuário.\"}");
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Erro ao cadastrar usuário.");
         }
     }
 }
