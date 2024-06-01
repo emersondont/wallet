@@ -1,6 +1,6 @@
 FROM openjdk:17-oracle
 
-ENV APP_NAME wallet-api-0.0.1-SNAPSHOT
+ENV APP_NAME wallet-api
 
 COPY ./target/${APP_NAME}.jar  /app/${APP_NAME}.jar
 

@@ -32,7 +32,7 @@ services:
     container_name: wallet-nginx
     build: ./nginx
     ports:
-      - 81:81
+      - 80:80
     volumes:
       - spa-volume:/var/www/html
     depends_on:
