@@ -16,8 +16,4 @@ Este projeto é uma aplicação de carteira digital desenvolvida como um projeto
 - **Rastreamento de Despesas e Ganhos:** Os usuários podem adicionar novos gastos e receitas, categorizando-os para um melhor acompanhamento.
 - **Saldo Mensal:** A aplicação calcula automaticamente o saldo mensal com base nos gastos e ganhos do usuário, fornecendo uma visão clara das finanças de cada mês.
 
-
-Você pode conferir o design do projeto no Figma [aqui](https://www.figma.com/design/6hvLDpFzgaItKazpMLDLtU/wallet?node-id=0%3A1&t=aFtarlAKfpwioFdv-1).
-
-
   
